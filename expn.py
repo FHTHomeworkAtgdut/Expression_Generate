@@ -32,7 +32,6 @@ def generate_expression(depth):
         num = generate_num()
         return TreeNode(num)
     else:
-        # 创建内部节点（运算符）
         operator = random.choice(operator_list)
         node = TreeNode(operator)
         node.left = generate_expression(depth - 1)
@@ -58,10 +57,8 @@ def expression_string(root,root_bracket): # 整条式子外部不需要括号
         return ""
 
     if root.left is None and root.right is None:
-        # 叶子节点包含操作数
         return str(root.val)
     else:
-        # 内部节点包含运算符
         left_expr = expression_string(root.left,root_bracket)
         right_expr = expression_string(root.right,root_bracket)
         operator = root.val
