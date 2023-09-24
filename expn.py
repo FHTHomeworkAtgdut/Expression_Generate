@@ -59,6 +59,7 @@ def expression_string(root,root_bracket): # 整条式子外部不需要括号
     if root.left is None and root.right is None:
         return str(root.val)
     else:
+    
         left_expr = expression_string(root.left,root_bracket)
         right_expr = expression_string(root.right,root_bracket)
         operator = root.val
@@ -122,9 +123,11 @@ def create_expression():
 
 def save_to_txt(list,path):
     f = open(path,"w")
-
+    
+    i = 0
     for line in list:
-        f.write(str(line) + '\n')
+        f.write(str(i)+". "+str(line) + '\n')
+        i = i+1
     f.close()
 
 
@@ -159,7 +162,6 @@ def correct_answer(answer_path,test_path):
     f.close()
     
 
-# 生成四则运算表达式树（深度为3）
 def main():
         parser = argparse.ArgumentParser()
         parser.add_argument('-r',"--range", type=int,default=10)
@@ -175,7 +177,7 @@ def main():
             max_num = args.range
             expression_num = args.num
             create_expression()
-        #else:
+        else:
             answer_path = args.answer
             text_path =  args.exercise
             correct_answer(answer_path,text_path)

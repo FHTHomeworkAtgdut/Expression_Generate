@@ -91,6 +91,26 @@ def is_repeated(p,q):
         return False;
 ```
 
+生成表达式字符串：
+```py
+def expression_string(root,root_bracket): # 整条式子外部不需要括号
+    if root is None:
+        return ""
+
+    if root.left is None and root.right is None:
+        return str(root.val)
+    else:
+        left_expr = expression_string(root.left,root_bracket)
+        right_expr = expression_string(root.right,root_bracket)
+        operator = root.val
+
+        if operator in "+-" and root_bracket != root:
+            return f"({left_expr} {operator} {right_expr})"
+        else:
+            return f"{left_expr} {operator} {right_expr}"
+```
+
+
 
 计算表达式：
 ```py
@@ -114,3 +134,42 @@ def calculate_expression(root):
         elif operator == '/':
             return Fraction(left_value,right_value)
 ```
+
+主函数中通过argparse获取命令行参数
+```py
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-r',"--range", type=int,default=10)
+        parser.add_argument('-n',"--num" ,type=int,default=1000)
+        parser.add_argument('-e',"--exercise", type=str,default="exercise.txt")
+        parser.add_argument('-a',"--answer", type=str,default="answer.txt")
+        args = parser.parse_args()
+```
+
+## 结果演示：
+命令行输入：
+![](cmd1.png)
+
+
+输出的文件:
+![](ans_expn.png)
+
+将待检查的答案文件命名为test.txt,将正确的答案改错：
+![](ans_chg.png)
+
+命令行输入与输出：
+![](cmd2.png)
+
+grade文件：
+![](grade.png)
+
+## 性能分析
+![](analysis.png)
+验证表达式是否重复的函数性能占比非常高，这是由于当前表达式要与之前的所有表达式做验证所导致，此外将二叉树转为字符串（树的中序遍历）耗时也比较高
+
+## 测试
+~~施工中~~
+
+## 小结：
+1. 有些写法比较冗余与随意
+2. 有些数字不是很合理，比如分数会出现4位数的分母
+3. 结对工作时的分工和相互检查的意识需要加强，效率需要提高
